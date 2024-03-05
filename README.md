@@ -89,4 +89,5 @@ GET /findMatches?word=OSSO
 - MongoDB
 - Mockito
 - JUnit 5
+- Instancio
 - JaCoCo
