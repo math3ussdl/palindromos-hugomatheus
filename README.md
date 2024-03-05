@@ -85,6 +85,7 @@ GET /findMatches?word=OSSO
 ## Requisitos Não-funcionais
 - Java 17
 - Spring Boot 6.1.4
+- Lombok
 - MongoDB
 - Mockito
 - JUnit 5
