@@ -10,7 +10,7 @@ de palavras que são palindrômicas.
 POST /findPalindromes
 [
   ["a", "o", "s", "s", "o"],
-  ["y", "r", z", "x", "l"],
+  ["y", "r", "z", "x", "l"],
   ["j", "s", "a", "p", "m"],
   ["j", "k", "p", "r", "z"],
   ["y", "l", "e", "r", "a"]
@@ -38,14 +38,14 @@ GET /findMatches
 ```json
 [
   {
-    "match_date": "2024-03-05T18:56:45.343Z",
-    "find_words": [
+    "id": "19b0402f-07fb-4e97-88c3-c69090a2a890",
+    "matchDate": "2024-03-05T18:56:45.343Z",
+    "findWords": [
       "OSSO",
       "YJJY",
       "LPPL",
       "ARARA"
-    ],
-    "_id": 1
+    ]
   }
 ]
 ```
@@ -61,23 +61,23 @@ GET /findMatches?word=OSSO
 ```json
 [
   {
-    "match_date": "2024-03-05T18:56:45.343Z",
-    "find_words": [
+    "id": "355c64c0-829c-451c-bc11-a61b5100b3f7",
+    "matchDate": "2024-03-05T18:56:45.343Z",
+    "findWords": [
       "OSSO",
       "YJJY",
       "LPPL",
       "ARARA"
-    ],
-    "_id": 1
+    ]
   },
   {
-    "match_date": "2024-03-05T19:10:54.871Z",
-    "find_words": [
+    "id": "7d3efb0d-145d-430b-aab8-3be0577f2c35",
+    "matchDate": "2024-03-05T19:10:54.871Z",
+    "findWords": [
       "HJJH",
       "ABBA",
       "OSSO"
-    ],
-    "_id": 3
+    ]
   }
 ]
 ```
@@ -86,7 +86,7 @@ GET /findMatches?word=OSSO
 - Java 17
 - Spring Boot 6.1.4
 - Lombok
-- MongoDB
+- H2 Database
 - Mockito
 - JUnit 5
 - Instancio
