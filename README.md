@@ -73,7 +73,6 @@ GET /matches?word=osso
 ## Requisitos Não-funcionais
 - Java 17
 - Spring Boot 3.2.3
-- Lombok
 - H2 Database
 - Mockito
 - JUnit 5
