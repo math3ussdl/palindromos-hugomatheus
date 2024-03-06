@@ -7,7 +7,7 @@ Passando uma matriz quadrada, de até 10 linhas e 10 colunas, a API retornará a
 de palavras que são palindrômicas.
 
 ```http
-POST /findPalindromes
+POST /matches/findPalindromes
 [
   ["a", "o", "s", "s", "o"],
   ["y", "r", "z", "x", "l"],
@@ -31,7 +31,7 @@ POST /findPalindromes
 Obtenha os resultados de cada tentativa e as palavras palindrômicas encontradas.
 
 ```http
-GET /findMatches
+GET /matches
 ```
 
 #### Resultado esperado:
@@ -54,7 +54,7 @@ GET /findMatches
 Obtenha a lista de partidas em que uma palavra específica aparece
 
 ```http
-GET /findMatches?word=OSSO
+GET /matches?word=OSSO
 ```
 
 #### Resultado esperado:
