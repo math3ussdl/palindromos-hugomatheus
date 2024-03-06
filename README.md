@@ -40,12 +40,7 @@ GET /matches
   {
     "id": "19b0402f-07fb-4e97-88c3-c69090a2a890",
     "matchDate": "2024-03-05T18:56:45.343Z",
-    "findWords": [
-      "OSSO",
-      "YJJY",
-      "LPPL",
-      "ARARA"
-    ]
+    "findWords": "osso,yjjy,arara,lppl"
   }
 ]
 ```
@@ -63,28 +58,19 @@ GET /matches?word=OSSO
   {
     "id": "355c64c0-829c-451c-bc11-a61b5100b3f7",
     "matchDate": "2024-03-05T18:56:45.343Z",
-    "findWords": [
-      "OSSO",
-      "YJJY",
-      "LPPL",
-      "ARARA"
-    ]
+    "findWords": "osso,yjjy,arara,lppl"
   },
   {
     "id": "7d3efb0d-145d-430b-aab8-3be0577f2c35",
     "matchDate": "2024-03-05T19:10:54.871Z",
-    "findWords": [
-      "HJJH",
-      "ABBA",
-      "OSSO"
-    ]
+    "findWords": "hjjh,abba,osso"
   }
 ]
 ```
 
 ## Requisitos Não-funcionais
 - Java 17
-- Spring Boot 6.1.4
+- Spring Boot 3.2.3
 - Lombok
 - H2 Database
 - Mockito

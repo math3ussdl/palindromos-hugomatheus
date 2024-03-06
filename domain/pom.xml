@@ -13,12 +13,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
-        </dependency>
-
-        <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
             <version>5.10.2</version>
@@ -45,7 +39,6 @@
             <version>5.11.0</version>
             <scope>test</scope>
         </dependency>
-
 
         <dependency>
             <groupId>org.instancio</groupId>
