@@ -1,8 +1,10 @@
 package me.math3ussdl.service;
 
+import me.math3ussdl.data.MatchDto;
 import me.math3ussdl.exception.MatrixMalformedException;
 import me.math3ussdl.port.api.MatchServicePort;
 import me.math3ussdl.port.spi.MatchPersistencePort;
+import org.instancio.Instancio;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,8 +16,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class MatchServiceImplTest {
@@ -37,18 +38,21 @@ public class MatchServiceImplTest {
 
         // Arrange
         char[][] matrix = {
-            {'a', 'b', 'c', 'd'},
-            {'e', 'f', 'g', 'h'},
-            {'i', 'j', 'f', 'l'},
-            {'m', 'n', 'o', 'a'}
+            {'a', 'j', 'j', 'a'},
+            {'l', 'f', 'g', 'h'},
+            {'l', 'j', 'f', 'l'},
+            {'a', 'n', 'o', 'a'}
         };
 
         // Act
         List<String> palindromes = matchService.findPalindromes(matrix);
 
         // Assert
-        assertThat(palindromes.size()).isEqualTo(1);
-        assertThat(palindromes.get(0)).isEqualTo("affa");
+        assertThat(palindromes.size()).isEqualTo(4);
+        assertThat(palindromes.get(0)).isEqualTo("ajja");
+        assertThat(palindromes.get(1)).isEqualTo("alla");
+        assertThat(palindromes.get(2)).isEqualTo("jfj");
+        assertThat(palindromes.get(3)).isEqualTo("affa");
         verify(persistence, times(1)).saveMatch(palindromes);
     }
 
@@ -149,5 +153,36 @@ public class MatchServiceImplTest {
 
         // Assert
         verify(persistence, times(1)).saveMatch(anyList());
+    }
+
+    @Test
+    @DisplayName("It should find all matches stored in db")
+    public void testFindAllMatches_ReturnsAllMatches() {
+        // Arrange
+        List<MatchDto> expectedMatches = Instancio.ofList(MatchDto.class).size(10).create();
+        when(persistence.getMatches()).thenReturn(expectedMatches);
+
+        // Act
+        List<MatchDto> actualMatches = matchService.findAllMatches();
+
+        // Assert
+        assertThat(expectedMatches.size()).isEqualTo(actualMatches.size());
+        verify(persistence, times(1)).getMatches();
+    }
+
+    @Test
+    public void testFindMatchesByWordIncidence_ReturnsMatchesByWord() {
+        // Arrange
+        String word = "abba";
+
+        List<MatchDto> expectedMatches = Instancio.ofList(MatchDto.class).size(10).create();
+        when(persistence.getMatches(word)).thenReturn(expectedMatches);
+
+        // Act
+        List<MatchDto> actualMatches = matchService.findMatchesByWordIncidence(word);
+
+        // Assert
+        assertThat(expectedMatches.size()).isEqualTo(actualMatches.size());
+        verify(persistence, times(1)).getMatches(word);
     }
 }

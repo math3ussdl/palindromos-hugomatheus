@@ -1,5 +1,6 @@
 package me.math3ussdl.service;
 
+import me.math3ussdl.data.MatchDto;
 import me.math3ussdl.exception.MatrixMalformedException;
 import me.math3ussdl.port.api.MatchServicePort;
 import me.math3ussdl.port.spi.MatchPersistencePort;
@@ -29,6 +30,24 @@ public class MatchServiceImpl implements MatchServicePort {
         return palindromes;
     }
 
+    @Override
+    public List<MatchDto> findAllMatches() {
+        return persistence.getMatches();
+    }
+
+    @Override
+    public List<MatchDto> findMatchesByWordIncidence(String word) {
+        return persistence.getMatches(word);
+    }
+
+    // private methods...
+
+    /**
+     * This method validates the size of a matrix.
+     *
+     * @param matrix The matrix to be validated.
+     * @throws MatrixMalformedException Thrown when the matrix is empty or has incorrect dimensions.
+     */
     private void validateMatrixSize(char[][] matrix) throws MatrixMalformedException {
         int rows = matrix.length;
 
@@ -45,6 +64,12 @@ public class MatchServiceImpl implements MatchServicePort {
         }
     }
 
+    /**
+     * This method finds palindromes in each row of the matrix.
+     *
+     * @param matrix The matrix to search for palindromes.
+     * @param palindromes A list to store the found palindromes.
+     */
     private void findRowPalindromes(char[][] matrix, List<String> palindromes) {
         for (char[] row : matrix) {
             for (int start = 0; start <= row.length - 3; start++) {
@@ -57,6 +82,12 @@ public class MatchServiceImpl implements MatchServicePort {
         }
     }
 
+    /**
+     * This method finds palindromes in each column of the matrix.
+     *
+     * @param matrix The matrix to search for palindromes.
+     * @param palindromes A list to store the found palindromes.
+     */
     private void findColumnPalindromes(char[][] matrix, List<String> palindromes) {
         for (int column = 0; column < matrix[0].length; column++) {
             char[] columnChars = getColumn(matrix, column);
@@ -70,6 +101,12 @@ public class MatchServiceImpl implements MatchServicePort {
         }
     }
 
+    /**
+     * This method finds palindromes in each diagonal of the matrix.
+     *
+     * @param matrix The matrix to search for palindromes.
+     * @param palindromes A list to store the found palindromes.
+     */
     private void findDiagonalPalindromes(char[][] matrix, List<String> palindromes) {
         for (int row = 0; row <= matrix.length - 3; row++) {
             for (int column = 0; column <= matrix[row].length - 3; column++) {
@@ -84,12 +121,12 @@ public class MatchServiceImpl implements MatchServicePort {
     }
 
     /**
-     * Verifica se uma subsequência de caracteres em um array é um palíndromo.
+     * This method checks if a substring of a character array is a palindrome.
      *
-     * @param arr   O array de caracteres contendo a subsequência a ser verificada.
-     * @param start O índice inicial da subsequência no array.
-     * @param end   O índice final da subsequência no array.
-     * @return True se a subsequência for um palíndromo, caso contrário, False.
+     * @param arr The character array.
+     * @param start The starting index of the substring.
+     * @param end The ending index of the substring.
+     * @return True if the substring is a palindrome, otherwise false.
      */
     private boolean isPalindrome(char[] arr, int start, int end) {
         while (start < end) {
@@ -101,11 +138,11 @@ public class MatchServiceImpl implements MatchServicePort {
     }
 
     /**
-     * Obtém uma coluna específica de uma matriz de caracteres.
+     * This method retrieves a specific column from a matrix.
      *
-     * @param matrix    A matriz de caracteres da qual obter a coluna.
-     * @param colIndex  O índice da coluna desejada na matriz.
-     * @return Um array de caracteres representando a coluna especificada da matriz.
+     * @param matrix The matrix from which to retrieve the column.
+     * @param colIndex The index of the column to retrieve.
+     * @return The column as a character array.
      */
     private char[] getColumn(char[][] matrix, int colIndex) {
         char[] column = new char[matrix.length];
@@ -116,12 +153,12 @@ public class MatchServiceImpl implements MatchServicePort {
     }
 
     /**
-     * Obtém uma diagonal específica de uma matriz de caracteres, a partir de uma posição inicial.
+     * This method retrieves characters from a diagonal of a matrix starting from a specific row and column.
      *
-     * @param matrix    A matriz de caracteres da qual obter a diagonal.
-     * @param row       O índice da linha inicial da diagonal na matriz.
-     * @param col       O índice da coluna inicial da diagonal na matriz.
-     * @return Um array de caracteres representando a diagonal especificada da matriz.
+     * @param matrix The matrix from which to retrieve the diagonal.
+     * @param row The starting row index of the diagonal.
+     * @param col The starting column index of the diagonal.
+     * @return The diagonal elements as a character array.
      */
     private char[] getDiagonal(char[][] matrix, int row, int col) {
         List<Character> diagonal = new ArrayList<>();

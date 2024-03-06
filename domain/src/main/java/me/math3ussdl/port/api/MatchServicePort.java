@@ -1,5 +1,6 @@
 package me.math3ussdl.port.api;
 
+import me.math3ussdl.data.MatchDto;
 import me.math3ussdl.exception.MatrixMalformedException;
 
 import java.util.List;
@@ -7,11 +8,26 @@ import java.util.List;
 public interface MatchServicePort {
 
     /**
-     * Encontra todos os palíndromos em uma matriz de caracteres, considerando as posições horizontal, vertical e diagonal.
+     * Finds all the palindromes in a character matrix, considering the horizontal, vertical and diagonal positions.
      *
-     * @param matrix A matriz de caracteres a ser analisada em busca de palíndromos.
-     * @return Uma lista contendo todos os palíndromos encontrados na matriz.
-     * @throws MatrixMalformedException Se a matriz não estiver no formato adequado.
+     * @param matrix The character matrix to be analyzed for palindromes.
+     * @return A list containing all the palindromes found in the matrix and saves these words in the database.
+     * @throws MatrixMalformedException If the matrix is not in the right format.
      */
     List<String> findPalindromes(char[][] matrix) throws MatrixMalformedException;
+
+    /**
+     * Finds all the matches containing the words found.
+     *
+     * @return A list of all the matches stored in the database.
+     */
+    List<MatchDto> findAllMatches();
+
+    /**
+     * Find all the matches containing the words found and containing a specific word.
+     *
+     * @param word A key word that will be contained in all palindrome matches
+     * @return A list of all the matches stored in the database.
+     */
+    List<MatchDto> findMatchesByWordIncidence(String word);
 }
