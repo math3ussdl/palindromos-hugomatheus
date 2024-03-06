@@ -17,45 +17,70 @@ public class MatchServiceImpl implements MatchServicePort {
 
     @Override
     public List<String> findPalindromes(char[][] matrix) throws MatrixMalformedException {
+        validateMatrixSize(matrix);
+
         List<String> palindromes = new ArrayList<>();
 
-        if (matrix.length > 10 || matrix[0].length > 10) {
-            throw new MatrixMalformedException(
-                    "Incorrect matrix! The size of rows and columns exceeds the value of 10");
-        }
-
-        for (char[] chars : matrix) {
-            for (int j = 0; j <= chars.length - 3; j++) {
-                for (int k = j + 2; k < chars.length; k++) {
-                    if (isPalindrome(chars, j, k)) {
-                        palindromes.add(new String(chars, j, k - j + 1));
-                    }
-                }
-            }
-        }
-
-        for (int i = 0; i <= matrix.length - 3; i++) {
-            for (int j = 0; j < matrix[i].length; j++) {
-                for (int k = i + 2; k < matrix.length; k++) {
-                    if (isPalindrome(getColumn(matrix, j), i, k)) {
-                        palindromes.add(new String(getColumn(matrix, j), i, k - i + 1));
-                    }
-                }
-            }
-        }
-
-        for (int i = 0; i <= matrix.length - 3; i++) {
-            for (int j = 0; j <= matrix[i].length - 3; j++) {
-                for (int k = i + 2, l = j + 2; k < matrix.length && l < matrix[k].length; k++, l++) {
-                    if (isPalindrome(getDiagonal(matrix, i, j), 0, k - i)) {
-                        palindromes.add(new String(getDiagonal(matrix, i, j), 0, k - i + 1));
-                    }
-                }
-            }
-        }
+        findRowPalindromes(matrix, palindromes);
+        findColumnPalindromes(matrix, palindromes);
+        findDiagonalPalindromes(matrix, palindromes);
 
         persistence.saveMatch(palindromes);
         return palindromes;
+    }
+
+    private void validateMatrixSize(char[][] matrix) throws MatrixMalformedException {
+        int rows = matrix.length;
+
+        if (rows == 0) {
+            throw new MatrixMalformedException(
+                "Empty matrix! Verify the matrix and try again.");
+        }
+
+        int columns = matrix[0].length;
+
+        if (columns > 10 || rows != columns) {
+            throw new MatrixMalformedException(
+                    "Incorrect matrix! Verify the matrix and try again.");
+        }
+    }
+
+    private void findRowPalindromes(char[][] matrix, List<String> palindromes) {
+        for (char[] row : matrix) {
+            for (int start = 0; start <= row.length - 3; start++) {
+                for (int end = start + 2; end < row.length; end++) {
+                    if (isPalindrome(row, start, end)) {
+                        palindromes.add(new String(row, start, end - start + 1));
+                    }
+                }
+            }
+        }
+    }
+
+    private void findColumnPalindromes(char[][] matrix, List<String> palindromes) {
+        for (int column = 0; column < matrix[0].length; column++) {
+            char[] columnChars = getColumn(matrix, column);
+            for (int start = 0; start <= columnChars.length - 3; start++) {
+                for (int end = start + 2; end < columnChars.length; end++) {
+                    if (isPalindrome(columnChars, start, end)) {
+                        palindromes.add(new String(columnChars, start, end - start + 1));
+                    }
+                }
+            }
+        }
+    }
+
+    private void findDiagonalPalindromes(char[][] matrix, List<String> palindromes) {
+        for (int row = 0; row <= matrix.length - 3; row++) {
+            for (int column = 0; column <= matrix[row].length - 3; column++) {
+                char[] diagonalChars = getDiagonal(matrix, row, column);
+                for (int start = 0, end = diagonalChars.length - 1; start <= end - 2; start++, end--) {
+                    if (isPalindrome(diagonalChars, start, end)) {
+                        palindromes.add(new String(diagonalChars, start, end - start + 1));
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -84,8 +109,8 @@ public class MatchServiceImpl implements MatchServicePort {
      */
     private char[] getColumn(char[][] matrix, int colIndex) {
         char[] column = new char[matrix.length];
-        for (int i = 0; i < matrix.length; i++) {
-            column[i] = matrix[i][colIndex];
+        for (int row = 0; row < matrix.length; row++) {
+            column[row] = matrix[row][colIndex];
         }
         return column;
     }
