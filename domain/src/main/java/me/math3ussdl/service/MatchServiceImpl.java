@@ -36,8 +36,8 @@ public class MatchServiceImpl implements MatchServicePort {
     }
 
     @Override
-    public List<MatchDto> findMatchesByWordIncidence(String word) {
-        return persistence.getMatches(word);
+    public List<MatchDto> findMatchesByWordIncidence(ArrayList<String> searchedWords) {
+        return persistence.getMatches(searchedWords);
     }
 
     // private methods...

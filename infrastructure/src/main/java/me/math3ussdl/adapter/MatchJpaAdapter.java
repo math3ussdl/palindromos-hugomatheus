@@ -20,7 +20,7 @@ public class MatchJpaAdapter implements MatchPersistencePort {
     @Override
     public void saveMatch(List<String> palindromes) {
         Match match = new Match();
-        match.setFindWords(new ArrayList<>(palindromes));
+        match.setFindWords(String.join(",", palindromes));
         repository.save(match);
     }
 
@@ -31,8 +31,8 @@ public class MatchJpaAdapter implements MatchPersistencePort {
     }
 
     @Override
-    public List<MatchDto> getMatches(String searchedWord) {
-        List<Match> matches = repository.findAllByWord(searchedWord);
+    public List<MatchDto> getMatches(ArrayList<String> searchedWords) {
+        List<Match> matches = repository.findByFindWordsIn(searchedWords);
         return MatchMapper.INSTANCE.matchListToMatchDtoList(matches);
     }
 }

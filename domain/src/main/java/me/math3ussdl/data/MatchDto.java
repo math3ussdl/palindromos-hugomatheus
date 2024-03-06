@@ -15,5 +15,5 @@ public class MatchDto {
 
     private UUID id;
     private OffsetDateTime matchDate;
-    private ArrayList<String> findWords;
+    private String findWords;
 }

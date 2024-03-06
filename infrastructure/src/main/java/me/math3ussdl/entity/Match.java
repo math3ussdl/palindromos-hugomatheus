@@ -21,7 +21,7 @@ public class Match {
 
     private OffsetDateTime matchDate;
 
-    private ArrayList<String> findWords;
+    private String findWords;
 
     @PrePersist
     void prePersist() {

@@ -6,6 +6,7 @@ import me.math3ussdl.port.api.MatchServicePort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -23,14 +24,14 @@ public class MatchController {
     }
 
     @GetMapping
-    public List<MatchDto> getMatches(@RequestParam(required = false) String word) {
+    public List<MatchDto> getMatches(@RequestParam(required = false) ArrayList<String> words) {
 
         List<MatchDto> matches;
 
-        if (word == null) {
+        if (words == null || words.isEmpty()) {
             matches = service.findAllMatches();
         } else {
-            matches = service.findMatchesByWordIncidence(word);
+            matches = service.findMatchesByWordIncidence(words);
         }
 
         return matches;

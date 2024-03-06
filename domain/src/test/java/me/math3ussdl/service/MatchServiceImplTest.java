@@ -12,6 +12,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
@@ -171,18 +172,20 @@ public class MatchServiceImplTest {
     }
 
     @Test
-    public void testFindMatchesByWordIncidence_ReturnsMatchesByWord() {
+    @DisplayName("It should return all matches that have incidence of these words")
+    public void testFindMatchesByWordsIncidence_ReturnsMatchesByWord() {
         // Arrange
-        String word = "abba";
+        ArrayList<String> words = new ArrayList<>();
+        words.add("abba");
 
         List<MatchDto> expectedMatches = Instancio.ofList(MatchDto.class).size(10).create();
-        when(persistence.getMatches(word)).thenReturn(expectedMatches);
+        when(persistence.getMatches(words)).thenReturn(expectedMatches);
 
         // Act
-        List<MatchDto> actualMatches = matchService.findMatchesByWordIncidence(word);
+        List<MatchDto> actualMatches = matchService.findMatchesByWordIncidence(words);
 
         // Assert
         assertThat(expectedMatches.size()).isEqualTo(actualMatches.size());
-        verify(persistence, times(1)).getMatches(word);
+        verify(persistence, times(1)).getMatches(words);
     }
 }

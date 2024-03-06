@@ -3,6 +3,7 @@ package me.math3ussdl.port.api;
 import me.math3ussdl.data.MatchDto;
 import me.math3ussdl.exception.MatrixMalformedException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface MatchServicePort {
@@ -26,8 +27,8 @@ public interface MatchServicePort {
     /**
      * Find all the matches containing the words found and containing a specific word.
      *
-     * @param word A key word that will be contained in all palindrome matches
+     * @param searchedWords A list of keywords that will be contained in all palindrome matches
      * @return A list of all the matches stored in the database.
      */
-    List<MatchDto> findMatchesByWordIncidence(String word);
+    List<MatchDto> findMatchesByWordIncidence(ArrayList<String> searchedWords);
 }

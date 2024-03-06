@@ -15,6 +15,7 @@ public class MatchConfiguration {
         return new MatchJpaAdapter();
     }
 
+    @Bean
     public MatchServicePort matchServicePort() {
         return new MatchServiceImpl(matchPersistencePort());
     }
