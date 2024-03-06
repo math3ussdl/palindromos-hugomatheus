@@ -32,7 +32,7 @@ public class MatchJpaAdapter implements MatchPersistencePort {
 
     @Override
     public List<MatchDto> getMatches(ArrayList<String> searchedWords) {
-        List<Match> matches = repository.findByFindWordsIn(searchedWords);
+        List<Match> matches = repository.findByFindWordsContaining(String.join(",", searchedWords));
         return MatchMapper.INSTANCE.matchListToMatchDtoList(matches);
     }
 }

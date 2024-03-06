@@ -48,8 +48,10 @@ GET /matches
 ### Pesquise as partidas pela incidência de uma palavra específica
 Obtenha a lista de partidas em que uma palavra específica aparece
 
+**OBS**: Passe na ordem correta em que o registro está salvo!
+
 ```http
-GET /matches?word=OSSO
+GET /matches?word=osso
 ```
 
 #### Resultado esperado:

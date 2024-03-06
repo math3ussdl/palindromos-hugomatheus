@@ -69,13 +69,14 @@ public class MatchJpaAdapterTest {
         // Arrange
         ArrayList<String> searchedWords = new ArrayList<>(Arrays.asList("level", "radar", "madam"));
         List<Match> matches = Instancio.ofList(Match.class).size(5).create();
-        when(repository.findByFindWordsIn(searchedWords)).thenReturn(matches);
+        when(repository.findByFindWordsContaining(String.join(",", searchedWords))).thenReturn(matches);
 
         // Act
         List<MatchDto> result = matchAdapter.getMatches(searchedWords);
 
         // Assert
         assertThat(matches.size()).isEqualTo(result.size());
-        verify(repository, times(1)).findByFindWordsIn(searchedWords);
+        verify(repository, times(1))
+                .findByFindWordsContaining(String.join(",", searchedWords));
     }
 }

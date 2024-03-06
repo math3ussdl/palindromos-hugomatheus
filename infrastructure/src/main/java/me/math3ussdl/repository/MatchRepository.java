@@ -10,5 +10,5 @@ import java.util.UUID;
 
 @Repository
 public interface MatchRepository extends JpaRepository<Match, UUID> {
-    List<Match> findByFindWordsIn(ArrayList<String> findWords);
+    List<Match> findByFindWordsContaining(String searchTerm);
 }
