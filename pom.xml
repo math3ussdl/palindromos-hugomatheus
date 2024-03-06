@@ -12,6 +12,7 @@
     <modules>
         <module>domain</module>
         <module>application</module>
+        <module>infrastructure</module>
     </modules>
 
     <build>
