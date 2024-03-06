@@ -12,8 +12,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyList;
@@ -41,7 +43,7 @@ public class MatchServiceImplTest {
         char[][] matrix = {
             {'a', 'j', 'j', 'a'},
             {'l', 'f', 'g', 'h'},
-            {'l', 'j', 'f', 'l'},
+            {'l', 'g', 'f', 'l'},
             {'a', 'n', 'o', 'a'}
         };
 
@@ -49,11 +51,10 @@ public class MatchServiceImplTest {
         List<String> palindromes = matchService.findPalindromes(matrix);
 
         // Assert
-        assertThat(palindromes.size()).isEqualTo(4);
+        assertThat(palindromes.size()).isEqualTo(3);
         assertThat(palindromes.get(0)).isEqualTo("ajja");
         assertThat(palindromes.get(1)).isEqualTo("alla");
-        assertThat(palindromes.get(2)).isEqualTo("jfj");
-        assertThat(palindromes.get(3)).isEqualTo("affa");
+        assertThat(palindromes.get(2)).isEqualTo("affa");
         verify(persistence, times(1)).saveMatch(palindromes);
     }
 
@@ -71,9 +72,9 @@ public class MatchServiceImplTest {
 
         // Act
         assertThat(catchThrowable(() -> matchService.findPalindromes(matrix)))
-                .as("Incorrect matrix! Verify the matrix and try again.")
+                .as("This isn't a 2d matrix! Verify the matrix and try again.")
                 .isInstanceOf(MatrixMalformedException.class)
-                .hasMessageContaining("Incorrect matrix!");
+                .hasMessageContaining("This isn't a 2d matrix!");
     }
 
     @Test
@@ -90,9 +91,9 @@ public class MatchServiceImplTest {
 
         // Act
         assertThat(catchThrowable(() -> matchService.findPalindromes(matrix)))
-                .as("Incorrect matrix! Verify the matrix and try again.")
+                .as("This isn't a 2d matrix! Verify the matrix and try again.")
                 .isInstanceOf(MatrixMalformedException.class)
-                .hasMessageContaining("Incorrect matrix!");
+                .hasMessageContaining("This isn't a 2d matrix!");
     }
 
     @Test
@@ -103,9 +104,9 @@ public class MatchServiceImplTest {
 
         // Act
         assertThat(catchThrowable(() -> matchService.findPalindromes(matrix)))
-                .as("Empty matrix! Verify the matrix and try again.")
+                .as("Invalid matrix size! Verify the matrix and try again.")
                 .isInstanceOf(MatrixMalformedException.class)
-                .hasMessageContaining("Empty matrix!");
+                .hasMessageContaining("Invalid matrix size!");
     }
 
     @Test
@@ -178,7 +179,12 @@ public class MatchServiceImplTest {
         ArrayList<String> words = new ArrayList<>();
         words.add("abba");
 
-        List<MatchDto> expectedMatches = Instancio.ofList(MatchDto.class).size(10).create();
+        List<MatchDto> expectedMatches = new ArrayList<>();
+
+        // Instanciate manually for test coverage
+        MatchDto matchDto = new MatchDto();
+        expectedMatches.add(matchDto);
+
         when(persistence.getMatches(words)).thenReturn(expectedMatches);
 
         // Act

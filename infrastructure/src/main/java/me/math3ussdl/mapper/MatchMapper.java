@@ -12,5 +12,6 @@ public interface MatchMapper {
 
     MatchMapper INSTANCE = Mappers.getMapper(MatchMapper.class);
 
+    MatchDto matchToMatchDto(Match match);
     List<MatchDto> matchListToMatchDtoList(List<Match> matchList);
 }
