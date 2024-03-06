@@ -13,6 +13,7 @@
         <module>domain</module>
         <module>application</module>
         <module>infrastructure</module>
+        <module>api</module>
     </modules>
 
     <build>
