@@ -86,8 +86,8 @@ GET /matches?word=osso
 - Hexagonal Architecture
 
 ## Design Patterns utilizados
-- Adapter;
-- Template Method
+- Adapter
+- IoC
 
 ## Instalação e utilização
 ```shell
