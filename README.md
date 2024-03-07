@@ -8,6 +8,9 @@ de palavras que são palindrômicas.
 
 ```http
 POST /matches/findPalindromes
+```
+```json5
+// body
 [
   ["a", "o", "s", "s", "o"],
   ["y", "r", "z", "x", "l"],
@@ -18,7 +21,7 @@ POST /matches/findPalindromes
 ```
 
 #### Resultado esperado:
-```json
+```json5
 [
     "OSSO",
     "YJJY",
@@ -35,7 +38,7 @@ GET /matches
 ```
 
 #### Resultado esperado:
-```json
+```json5
 [
   {
     "id": "19b0402f-07fb-4e97-88c3-c69090a2a890",
@@ -55,7 +58,7 @@ GET /matches?word=osso
 ```
 
 #### Resultado esperado:
-```json
+```json5
 [
   {
     "id": "355c64c0-829c-451c-bc11-a61b5100b3f7",
@@ -78,3 +81,23 @@ GET /matches?word=osso
 - JUnit 5
 - Instancio
 - JaCoCo
+
+## Arquitetura utilizada
+- Hexagonal Architecture
+
+## Instalação e utilização
+```shell
+mvn spring-boot:run
+```
+
+## Executando testes
+```shell
+mvn clean test
+```
+
+Se quiser executar os testes e, simultaneamente, gerar os documentos de cobertura dos testes, execute o seguinte comando:
+```shell
+mvn clean test jacoco:report
+```
+
+
