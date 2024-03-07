@@ -1,10 +1,8 @@
 package me.math3ussdl.application.controller;
 
 import me.math3ussdl.domain.data.MatchDto;
-import me.math3ussdl.domain.exception.MatrixMalformedException;
 import me.math3ussdl.domain.port.api.MatchServicePort;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,17 +17,10 @@ public class MatchController {
     private MatchServicePort service;
 
     @PostMapping("/findPalindromes")
-    public ResponseEntity<?> findPalindromes(@RequestBody char[][] matrix)
-            throws MatrixMalformedException {
+    public ResponseEntity<?> findPalindromes(@RequestBody char[][] matrix) {
 
-        try {
-            List<String> palindromes = service.findPalindromes(matrix);
-            return ResponseEntity.ok(palindromes);
-        } catch (MatrixMalformedException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred!");
-        }
+        List<String> palindromes = service.findPalindromes(matrix);
+        return ResponseEntity.ok(palindromes);
     }
 
     @GetMapping

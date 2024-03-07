@@ -12,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
+@ExtendWith(SpringExtension.class)
 public class MatchControllerTest {
 
     @Mock
@@ -52,41 +54,6 @@ public class MatchControllerTest {
         // Assert
         assertThat(HttpStatus.OK).isEqualTo(response.getStatusCode());
         assertThat(expectedPalindromes).isEqualTo(response.getBody());
-        verify(matchService, times(1)).findPalindromes(matrix);
-    }
-
-    @Test
-    @DisplayName("It should throws MatrixMalformedException, returning bad request response")
-    public void testFindPalindromes_MatrixMalformedException_ReturnsBadRequestResponse()
-            throws MatrixMalformedException {
-
-        // Arrange
-        char[][] matrix = {{'a', 'b'}, {'c', 'd', 'e'}};
-        String errorMessage = "Matrix is malformed!";
-        when(matchService.findPalindromes(matrix)).thenThrow(new MatrixMalformedException(errorMessage));
-
-        // Act
-        ResponseEntity<?> response = matchController.findPalindromes(matrix);
-
-        // Assert
-        assertThat(HttpStatus.BAD_REQUEST).isEqualTo(response.getStatusCode());
-        assertThat(errorMessage).isEqualTo(response.getBody());
-        verify(matchService, times(1)).findPalindromes(matrix);
-    }
-
-    @Test
-    @DisplayName("It should throws Exception, returning internal server error response")
-    public void testFindPalindromes_ExceptionThrown_ReturnsInternalServerErrorResponse() {
-        // Arrange
-        char[][] matrix = {{'a', 'b', 'c'}, {'d', 'e', 'f'}, {'g', 'h', 'i'}};
-        when(matchService.findPalindromes(matrix)).thenThrow(new RuntimeException());
-
-        // Act
-        ResponseEntity<?> response = matchController.findPalindromes(matrix);
-
-        // Assert
-        assertThat(HttpStatus.INTERNAL_SERVER_ERROR).isEqualTo(response.getStatusCode());
-        assertThat("An unexpected error occurred!").isEqualTo(response.getBody());
         verify(matchService, times(1)).findPalindromes(matrix);
     }
 
