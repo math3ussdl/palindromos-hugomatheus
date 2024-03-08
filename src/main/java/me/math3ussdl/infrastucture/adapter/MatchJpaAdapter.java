@@ -20,7 +20,10 @@ public class MatchJpaAdapter implements MatchPersistencePort {
     @Override
     public void saveMatch(List<String> palindromes) {
         Match match = new Match();
-        match.setFindWords(String.join(",", palindromes));
+
+        if (!palindromes.isEmpty())
+            match.setFindWords(String.join(",", palindromes));
+
         repository.save(match);
     }
 

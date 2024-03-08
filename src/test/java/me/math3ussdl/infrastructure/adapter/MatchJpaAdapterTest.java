@@ -43,7 +43,20 @@ public class MatchJpaAdapterTest {
     }
 
     @Test
-    @DisplayName("It should saves a match successfully")
+    @DisplayName("It should saves a match successfully with no palindromes")
+    public void testSaveMatch_NoPalindromes() {
+        // Arrange
+        List<String> palindromes = new ArrayList<>();
+
+        // Act
+        matchAdapter.saveMatch(palindromes);
+
+        // Assert
+        verify(repository, times(1)).save(any(Match.class));
+    }
+
+    @Test
+    @DisplayName("It should returns all matches successfully")
     public void testGetMatches() {
         // Arrange
         List<Match> matches = Instancio.ofList(Match.class).size(5).create();
