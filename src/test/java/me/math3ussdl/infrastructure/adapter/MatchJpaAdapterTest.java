@@ -53,7 +53,7 @@ public class MatchJpaAdapterTest {
         List<MatchDto> result = matchAdapter.getMatches();
 
         // Assert
-        assertThat(matches.size()).isEqualTo(result.size());
+        assertThat(matches).hasSize(result.size());
         verify(repository, times(1)).findAll();
     }
 
@@ -69,7 +69,7 @@ public class MatchJpaAdapterTest {
         List<MatchDto> result = matchAdapter.getMatches(searchedWords);
 
         // Assert
-        assertThat(matches.size()).isEqualTo(result.size());
+        assertThat(matches).hasSize(result.size());
         verify(repository, times(1))
                 .findByFindWordsContaining(String.join(",", searchedWords));
     }

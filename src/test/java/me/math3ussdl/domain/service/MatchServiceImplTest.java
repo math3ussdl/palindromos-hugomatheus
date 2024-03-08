@@ -49,7 +49,7 @@ public class MatchServiceImplTest {
         List<String> palindromes = matchService.findPalindromes(matrix);
 
         // Assert
-        assertThat(palindromes.size()).isEqualTo(3);
+        assertThat(palindromes).hasSize(3);
         assertThat(palindromes.get(0)).isEqualTo("ajja");
         assertThat(palindromes.get(1)).isEqualTo("alla");
         assertThat(palindromes.get(2)).isEqualTo("affa");
@@ -96,9 +96,34 @@ public class MatchServiceImplTest {
 
     @Test
     @DisplayName("It should throws a MatrixMalformedException, passing empty matrix")
-    public void testFindPalindromes_WithEmptyMatrix_ShouldReturnEmptyList() {
+    public void testFindPalindromes_WithEmptyMatrix_ShouldThrowMatrixMalformedException() {
         // Arrange
         char[][] matrix = {};
+
+        // Act
+        assertThat(catchThrowable(() -> matchService.findPalindromes(matrix)))
+                .as("Invalid matrix size! Verify the matrix and try again.")
+                .isInstanceOf(MatrixMalformedException.class)
+                .hasMessageContaining("Invalid matrix size!");
+    }
+
+    @Test
+    @DisplayName("It should throws a MatrixMalformedException, passing matrix with length greater than 10")
+    public void testFindPalindromes_WithMatrixWithLengthGreatherThan10_ShouldThrowMatrixMalformedException() {
+        // Arrange
+        char[][] matrix = {
+                {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'},
+                {'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't'},
+                {'u', 'v', 'w', 'x', 'y', 'z', 'a', 'b', 'c', 'd'},
+                {'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n'},
+                {'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n'},
+                {'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n'},
+                {'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n'},
+                {'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n'},
+                {'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n'},
+                {'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n'},
+                {'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n'}
+        };
 
         // Act
         assertThat(catchThrowable(() -> matchService.findPalindromes(matrix)))
@@ -117,7 +142,7 @@ public class MatchServiceImplTest {
         List<String> palindromes = matchService.findPalindromes(matrix);
 
         // Assert
-        assertThat(palindromes.isEmpty()).isTrue();
+        assertThat(palindromes).isEmpty();
     }
 
     @Test
@@ -134,7 +159,7 @@ public class MatchServiceImplTest {
         List<String> palindromes = matchService.findPalindromes(matrix);
 
         // Assert
-        assertThat(palindromes.isEmpty()).isTrue();
+        assertThat(palindromes).isEmpty();
     }
 
     @Test
@@ -166,7 +191,7 @@ public class MatchServiceImplTest {
         List<MatchDto> actualMatches = matchService.findAllMatches();
 
         // Assert
-        assertThat(expectedMatches.size()).isEqualTo(actualMatches.size());
+        assertThat(expectedMatches).hasSize(actualMatches.size());
         verify(persistence, times(1)).getMatches();
     }
 
@@ -189,7 +214,7 @@ public class MatchServiceImplTest {
         List<MatchDto> actualMatches = matchService.findMatchesByWordIncidence(words);
 
         // Assert
-        assertThat(expectedMatches.size()).isEqualTo(actualMatches.size());
+        assertThat(expectedMatches).hasSize(actualMatches.size());
         verify(persistence, times(1)).getMatches(words);
     }
 }

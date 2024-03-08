@@ -40,7 +40,7 @@ public class MatchMapperImplTest {
         MatchDto actualDto = mapper.matchToMatchDto(match);
 
         // Assert
-        assertThat(expectedDto.equals(actualDto)).isTrue();
+        assertThat(expectedDto).isEqualTo(actualDto);
         assertThat(actualDto.hashCode()).isEqualTo(expectedDto.hashCode());
     }
 

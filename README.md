@@ -87,7 +87,7 @@ GET /matches?word=osso
 
 ## Design Patterns utilizados
 - Adapter
-- IoC
+- Dependency Injection (DI)
 
 ## Instalação e utilização
 ```shell

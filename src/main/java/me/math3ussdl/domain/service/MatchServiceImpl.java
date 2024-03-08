@@ -46,14 +46,14 @@ public class MatchServiceImpl implements MatchServicePort {
     private void validateMatrixSize(char[][] matrix) throws MatrixMalformedException {
         String msg = null;
 
-        if (matrix.length == 0 || matrix.length > MAX_SIZE || matrix[0].length > MAX_SIZE) {
+        if (matrix.length == 0 || matrix.length > MAX_SIZE) {
             msg = "Invalid matrix size! Verify the matrix and try again.";
-        }
-
-        for (char[] row : matrix) {
-            if (row.length != matrix.length) {
-                msg = "This isn't a 2d matrix! Verify the matrix and try again.";
-                break;
+        } else {
+            for (char[] row : matrix) {
+                if (row.length != matrix.length) {
+                    msg = "This isn't a 2d matrix! Verify the matrix and try again.";
+                    break;
+                }
             }
         }
 
